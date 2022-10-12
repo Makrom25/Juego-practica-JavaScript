@@ -11,14 +11,13 @@ let elementsSize;
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
+const playerPosition = {}
 
 function startGame() {
-
-
-    game.font = (elementsSize - 10) + 'px Verdana';
+    game.font = elementsSize -20  + 'px Verdana';
     game.textAlign = 'end';
 
-    const map = maps[0];
+    const map = maps[1];
     const mapRows = map.trim().split('\n').map(row => row.trim().split(''))
 
     mapRows.forEach((row, rowI) =>{
@@ -26,31 +25,30 @@ function startGame() {
             const emoji = emojis[col];
             const posX = elementsSize * (colI + 1);
             const posY = elementsSize * (rowI + 1);
+
+        if (col === 'O') {
+            playerPosition.x = posX;
+            playerPosition.y = posY;
+            console.log(playerPosition)
+        }
+
             game.fillText(emoji, posX, posY);
         })
     })
 
+    
     // for (let row = 1; row <= 10; row++) {
     //     for (let col = 1; col <= 10; col++) {
     //         game.fillText(emojis[mapRows[row - 1 ][col - 1]], elementsSize * col, elementsSize * row);
     //     }
     // }
+
+    movePlayer();
 }
-function setCanvasSize() {
 
-    if (window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.8;
-    } else {
-        canvasSize = window.innerHeight * 0.8;
-    }
-    canvas.setAttribute('width', canvasSize);
-    canvas.setAttribute('height', canvasSize);
-
-    elementsSize = canvasSize / 10
-
-    startGame()
-}   
-
+function movePlayer() {
+    game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
+}
 
 window.addEventListener('keydown', moveByKeys)
 btnUp.addEventListener('click', moveUp)
@@ -61,8 +59,8 @@ btnDown.addEventListener('click', moveDown)
 function moveByKeys(event) {
     event.key==="ArrowUp"? moveUp()
     :event.key==="ArrowLeft"? moveLeft()
-    :event.key==="ArrowRight"?moveRight()
-    :event.key==="ArrowLeft"?moveRight()
+    :event.key==="ArrowRight"?moveRight() 
+    :event.key==="ArrowDown"?moveDown()
     :console.log("Esa tecla no mueve nada");
 
     // if (event.key === 'ArrowUp') moveUp();
@@ -74,15 +72,37 @@ function moveByKeys(event) {
 }
 
 function moveUp () {
-    console.log('Me muevo pa arriba')
+    console.log('Me muevo pa arriba');
+    playerPosition.y -= elementsSize;
+    movePlayer();
 }
 function moveLeft () {
-    console.log('Me muevo pa la izquierda')
+    console.log('Me muevo pa la izquierda');
+    playerPosition.x -= elementsSize;
+    movePlayer();;
 }
 
 function moveRight () {
-    console.log('Me muevo pa la derecha')
+    console.log('Me muevo pa la derecha');
+    playerPosition.x += elementsSize;
+    movePlayer();
 }
 function moveDown () {
-    console.log('Me muevo pa abajo')
-}
+    console.log('Me muevo pa abajo');
+    playerPosition.y += elementsSize;
+    movePlayer();;
+} 
+function setCanvasSize() {
+
+    if (window.innerHeight > window.innerWidth) {
+        canvasSize = window.innerWidth * 0.8;
+    } else {
+        canvasSize = window.innerHeight * 0.8;
+    }
+    canvas.setAttribute('width', canvasSize);
+    canvas.setAttribute('height', canvasSize);
+
+    elementsSize = canvasSize / 10
+    console.log({ canvasSize, elementsSize})
+    startGame()
+}   
