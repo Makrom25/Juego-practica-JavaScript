@@ -59,17 +59,18 @@ btnRight.addEventListener('click', moveRight)
 btnDown.addEventListener('click', moveDown)
 
 function moveByKeys(event) {
-    if (event.key === 'ArrowUp') moveUp();
-    else if (event.key === 'ArrowLeft')  moveLeft();
-    else if (event.key === 'ArrowRight') moveRight();
-    else if (event.key ==='ArrowDown') moveDown();
-    else console.log('Esta tecla no mueve nada')
+    event.key==="ArrowUp"? moveUp()
+    :event.key==="ArrowLeft"? moveLeft()
+    :event.key==="ArrowRight"?moveRight()
+    :event.key==="ArrowLeft"?moveRight()
+    :console.log("Esa tecla no mueve nada");
 
-    // event.key==="ArrowUp"? moveUp()
-    // :event.key==="ArrowLeft"? moveLeft()
-    // :event.key==="ArrowRight"?moveRight()
-    // :event.key==="ArrowLeft"?moveRight()
-    // :console.log("Esa tecla no mueve nada");
+    // if (event.key === 'ArrowUp') moveUp();
+    // else if (event.key === 'ArrowLeft')  moveLeft();
+    // else if (event.key === 'ArrowRight') moveRight();
+    // else if (event.key ==='ArrowDown') moveDown();
+    // else console.log('Esta tecla no mueve nada')
+    
 }
 
 function moveUp () {
