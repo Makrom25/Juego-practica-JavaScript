@@ -11,14 +11,19 @@ let elementsSize;
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
-const playerPosition = {}
+const playerPosition = {
+    x: undefined,
+    y: undefined,
+}
 
 function startGame() {
-    game.font = elementsSize -20  + 'px Verdana';
+    game.font = elementsSize - 20  + 'px Verdana';
     game.textAlign = 'end';
 
-    const map = maps[1];
+    const map = maps[0];
     const mapRows = map.trim().split('\n').map(row => row.trim().split(''))
+
+    game.clearRect(0,0,canvasSize,canvasSize);
 
     mapRows.forEach((row, rowI) =>{
         row.forEach((col, colI) => {
@@ -27,9 +32,11 @@ function startGame() {
             const posY = elementsSize * (rowI + 1);
 
         if (col === 'O') {
+            if (!playerPosition.x && !playerPosition.y) {
             playerPosition.x = posX;
             playerPosition.y = posY;
             console.log(playerPosition)
+            }
         }
 
             game.fillText(emoji, posX, posY);
@@ -74,23 +81,25 @@ function moveByKeys(event) {
 function moveUp () {
     console.log('Me muevo pa arriba');
     playerPosition.y -= elementsSize;
-    movePlayer();
+    startGame();
 }
 function moveLeft () {
     console.log('Me muevo pa la izquierda');
     playerPosition.x -= elementsSize;
-    movePlayer();;
+    startGame();
 }
 
 function moveRight () {
     console.log('Me muevo pa la derecha');
     playerPosition.x += elementsSize;
-    movePlayer();
+    startGame();
+
 }
 function moveDown () {
     console.log('Me muevo pa abajo');
     playerPosition.y += elementsSize;
-    movePlayer();;
+    startGame();
+
 } 
 function setCanvasSize() {
 
