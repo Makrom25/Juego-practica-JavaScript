@@ -246,11 +246,12 @@ function setCanvasSize() {
     }
 
     canvasSize = Number(canvasSize.toFixed(0))
-
+    
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
 
     elementsSize = canvasSize / 10;
+    elementsSize = Number(elementsSize.toFixed(0))
     showLives();
     startGame();
     playerPosition.x = undefined;
