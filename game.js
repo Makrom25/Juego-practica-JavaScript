@@ -8,6 +8,10 @@ const hearts = document.querySelector('#lives');
 const time = document.querySelector('#time');
 const record = document.querySelector('#record');
 const pResult = document.querySelector('#result');
+const paragraph = document.querySelector('#paragraph');
+const restart = document.querySelector('.restart');
+const btnYes = document.querySelector('#btnYes');
+const btnNo = document.querySelector('#btnNo')
 
 let canvasSize;
 let elementsSize;
@@ -15,11 +19,13 @@ let level = 0;
 let lives = 3;
 
 let timeStart;
-let timePlayer;
 let timeInterval;
+let timePlayer;
 
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
+
+btnYes.addEventListener('click', displaycontinue);
 
 const playerPosition = {
     x: undefined,
@@ -41,9 +47,7 @@ function startGame() {
         gameWin();
         return;
     }
-
     
-
     const mapRows = map.trim().split('\n').map(row => row.trim().split(''));
     enemiyPositions = [];
     game.clearRect(0,0,canvasSize,canvasSize);
@@ -133,11 +137,17 @@ function setRecord() {
             pResult.innerHTML = 'Superaste el record';
         } else {
             pResult.innerText = 'No superaste el record :c';
+           
+            localStorage.setItem('player_time', recordTime);
         }
     }else {
         localStorage.setItem('record_time', playerTime);   
         pResult.innerText = 'Primera vez? sigue intentando';
+     
     }
+    
+
+
 }
 
 function levelFail() {
@@ -163,9 +173,35 @@ function levelWin() {
 function gameWin () {
     console.log('ganaste el juego!');
     clearInterval(timeInterval);
-    setRecord();
+    resetGame();
     
+
+
+
 }
+
+function resetGame() {
+    restart.classList.remove('inactive');
+    paragraph.innerText = 'Tu record fue de: ' +localStorage.getItem('player_time') + ' ,Se que puedes hacerlo mejor!';
+    setRecord()
+}
+
+function displaycontinue() {
+    const continuar = restart.classList.contains('inactive');
+    if(!continuar){
+        restart.classList.add('inactive');
+    }
+    if(level = 3) {
+        level = 0;
+        lives = 3
+        timeStart = undefined;
+    } 
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+    showLives();
+
+}
+
 window.addEventListener('keyup', moveByKeys);
 btnUp.addEventListener('click', moveUp);
 btnLeft.addEventListener('click', moveLeft);

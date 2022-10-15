@@ -20,14 +20,23 @@
             <button id="down">Abajo</button>
         </div>
 
-        <div class="messages"></div>
+        <div class="messages">
             <p>Vidas: <span id="lives"></span></p>
             <p>Tiempo:⏱ <span id="time"></span></p>
             <p>Record:🏁 <span id="record"></span></p>
             <p id="result"></p>
+        </div>
     </div>
-    <div class="restart">
-        
+    <div class="restart inactive">
+        <div class="continue-option">
+            <h2>¿Deseas Repetir el juego?</h2>
+            <p id="paragraph">Tu record fue de:</p>
+            <div class="buttons-container">
+                <button id="btnYes">Si!</button>
+                <button id="btnNo">No...</button>
+            </div>
+
+        </div>
     </div>
 
     <script src="./maps.js"></script>
